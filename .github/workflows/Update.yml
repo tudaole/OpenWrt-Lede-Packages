@@ -163,6 +163,12 @@ jobs:
         rm -rf ./op-mosdns/tmp     
         git clone https://github.com/sbwml/v2ray-geodata ./op-mosdns/v2ray-geodata
 
+    - name: Fix submodules
+      run: |
+        git submodule deinit -f --all
+        rm -rf .git/modules/*
+        git submodule update --init --recursive
+
     - name: Apply Changes
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
