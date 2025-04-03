@@ -32,7 +32,7 @@ jobs:
         retain_days: 1
         keep_minimum_runs: 0
         token: ${{ secrets.GH_TOKEN }}
-        
+
     - name: Update
       run: |
 
@@ -56,8 +56,7 @@ jobs:
         rm -rf ./op-lucky/*
         rm -rf ./op-daed/*
         rm -rf ./op-mosdns/*
-        
-         
+
         git clone https://github.com/zzsj0928/luci-app-pushbot ./luci-app-pushbot
         rm -rf ./luci-app-pushbo/README.md
         git clone https://github.com/tty228/luci-app-wechatpush ./luci-app-wechatpush
@@ -72,11 +71,10 @@ jobs:
         rm -rf ./luci-app-ikoolproxy/development.doc
         rm -rf ./luci-app-ikoolproxy/README.md
 
-       
         git clone https://github.com/linkease/nas-packages-luci ./linkease/nas-packages-luci
         mv ./linkease/nas-packages-luci/luci ./linkease/
         rm -rf ./linkease/nas-packages-luci
-        
+
         git clone https://github.com/linkease/nas-packages ./linkease/nas-packages
         mv ./linkease/nas-packages/multimedia/ffmpeg-remux ./linkease/nas-packages/
         mv ./linkease/nas-packages/network/services/* ./linkease/nas-packages/
@@ -84,7 +82,7 @@ jobs:
         rm -rf ./linkease/nas-packages/network
         rm -rf ./linkease/nas-packages/.git
         rm -rf ./linkease/nas-packages/README.md
-        
+
         git clone https://github.com/linkease/istore ./linkease/iStore
         mv ./linkease/iStore/luci/*  ./linkease/luci/
         rm -rf ./linkease/iStore
@@ -93,29 +91,26 @@ jobs:
         mv ./linkease/istore-ui/app-store-ui ./linkease/luci/
         rm -rf ./linkease/istore-ui  
 
-
-
         git clone https://github.com/destan19/OpenAppFilter ./op-oaf
         rm -rf ./op-oaf/README.md
 
-        
         git clone https://github.com/xiaorouji/openwrt-passwall-packages ./patch/wall
         rm -rf ./patch/wall/.github
         # rm -rf ./patch/wall/chinadns-ng
-        
+
         git clone https://github.com/fw876/helloworld ./patch/wall/helloworld
         mv ./patch/wall/helloworld/redsocks2 ./patch/wall/
         mv ./patch/wall/helloworld/lua-neturl ./patch/wall/
         mv ./patch/wall/helloworld/shadow-tls ./patch/wall/
         mv ./patch/wall/helloworld/luci-app-ssr-plus ./patch/wall-luci/
-        
+
         rm -rf ./patch/wall/gn
         # rm -rf ./patch/wall/naiveproxy
         mv ./patch/wall/helloworld/gn ./patch/wall/
         # mv ./patch/wall/helloworld/naiveproxy ./patch/wall/
-        
+
         rm -rf ./patch/wall/helloworld
-    
+
         git clone https://github.com/xiaorouji/openwrt-passwall ./patch/wall-luci/pass
         git clone https://github.com/xiaorouji/openwrt-passwall2 ./patch/wall-luci/pass2
         mv ./patch/wall-luci/pass/luci-app-passwall ./patch/wall-luci/
@@ -131,16 +126,14 @@ jobs:
         mv ./patch/wall-luci/tmp/luci-app-nikki ./patch/wall-luci/
         mv ./patch/wall-luci/tmp/nikki ./patch/wall-luci/
         rm -rf ./patch/wall-luci/tmp
-        
+
         git clone https://github.com/immortalwrt/homeproxy ./patch/wall-luci/luci-app-homeproxy
         rm -rf ./patch/wall-luci/luci-app-homeproxy/.github
         rm -rf ./patch/wall-luci/luci-app-homeproxy/.git
-        
-        
+
         git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic ./luci-app-unblockneteasemusic/
         rm -rf ./luci-app-unblockneteasemusic/.github
         rm -rf ./luci-app-unblockneteasemusic/README.md
-
 
         git clone https://github.com/jerrykuku/luci-theme-argon ./theme/luci-theme-argon
         rm -rf ./theme/luci-theme-argon/.github
@@ -148,7 +141,6 @@ jobs:
         rm -rf ./theme/luci-theme-argon/README*
         rm -rf ./theme/luci-theme-argon/RELEASE*
 
-        
         git clone https://github.com/unifreq/luci-app-oled ./oled
         mv ./oled/luci-app-oled ./
         rm -rf ./oled
@@ -163,19 +155,21 @@ jobs:
         mv ./op-daed/tmp/daed ./op-daed/
         rm -rf ./op-daed/tmp
         mkdir -p ./op-daed/libcron && wget -O ./op-daed/libcron/Makefile https://raw.githubusercontent.com/immortalwrt/packages/refs/heads/master/libs/libcron/Makefile
-        
-        
+
         git clone https://github.com/sbwml/luci-app-mosdns -b v5 ./op-mosdns/tmp
         mv ./op-mosdns/tmp/luci-app-mosdns ./op-mosdns/
         mv ./op-mosdns/tmp/mosdns ./op-mosdns/
         mv ./op-mosdns/tmp/v2dat ./op-mosdns/
         rm -rf ./op-mosdns/tmp     
         git clone https://github.com/sbwml/v2ray-geodata ./op-mosdns/v2ray-geodata
-        
-        
+
     - name: Apply
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
+        git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/tudaole/OpenWrt-Lede-Packages.git
         git add .
-        git commit -m "Auto Sync: $(date +%Y-%m-%d" "%H:%M)"
+        git commit -m "Auto Sync: $(date +%Y-%m-%d" "%H:%M)" || exit 0
+        git push -f origin main
         git push -f 
-              
+
