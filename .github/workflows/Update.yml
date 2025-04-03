@@ -6,7 +6,7 @@ on:
 
 # 定时触发编译
   schedule:
-    - cron: 0 */1 * * *
+    - cron: 0 0 * * *
 
 # 点赞☆Star触发编译
 #  watch:
@@ -21,8 +21,8 @@ jobs:
 
     - name: Set git
       run : |
-        git config --global user.email "122336705+tudaole@users.noreply.github.com"
-        git config --global user.name "tudaole"
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
         sudo timedatectl set-timezone "Asia/Shanghai"
 
     - name: Delete workflow runs
@@ -30,7 +30,8 @@ jobs:
       continue-on-error: true
       with:
         retain_days: 1
-        keep_minimum_runs: 0  
+        keep_minimum_runs: 0
+        token: ${{ secrets.GH_TOKEN }}
         
     - name: Update
       run: |
