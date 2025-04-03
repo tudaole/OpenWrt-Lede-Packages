@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+[submodule "luci-app-ikoolproxy"]
+    path = luci-app-ikoolproxy
+    url = https://github.com/xxxxxx/luci-app-ikoolproxy.git
