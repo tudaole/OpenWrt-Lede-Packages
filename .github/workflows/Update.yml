@@ -163,7 +163,7 @@ jobs:
         rm -rf ./op-mosdns/tmp     
         git clone https://github.com/sbwml/v2ray-geodata ./op-mosdns/v2ray-geodata
 
-    - name: Apply
+    - name: Apply Changes
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
@@ -173,5 +173,3 @@ jobs:
         git add .
         git commit -m "Auto Sync: $(date +%Y-%m-%d" "%H:%M)" || exit 0
         git push origin main
-
-
